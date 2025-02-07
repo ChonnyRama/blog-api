@@ -1,5 +1,13 @@
-import api from './api'
+import users from './users'
+import posts from './posts'
+import sessions from './sessions'
+import comments from './comments'
 
-export default {
-  api,
+const routes = {
+  users,
+  posts,
+  sessions,
+  comments,
 }
+
+export default routes;
