@@ -3,7 +3,7 @@ import express from 'express'
 import cors from 'cors'
 import routes from './routes'
 import { PrismaClient } from '@prisma/client'
-const prisma = PrismaClient()
+const prisma = new PrismaClient()
 const corsOptions = {
   origin: ["http://localhost:5173"]
 }
@@ -11,6 +11,8 @@ const corsOptions = {
 const app = express()
 
 app.use(cors(corsOptions))
+app.use(express.json())
+app.use(express.urlencoded({extended: true}))
 
 app.use('/api/users', routes.users)
 app.use('/api/posts', routes.posts)

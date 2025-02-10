@@ -2,7 +2,7 @@ import { PrismaClient } from "@prisma/client"
 import { body, validationResult } from 'express-validator'
 import bcrypt from 'bcrypt'
 
-const prisma = PrismaClient()
+const prisma = new PrismaClient()
 
 const validateUser = [
   body("username").trim()
@@ -30,7 +30,7 @@ export const createUser = [
   async (req, res, next) => {
     const errors = validationResult(req)
     if (!errors.isEmpty()) {
-      return res.status(400)
+      return res.status(400).json({errors: errors.array()})
       //send errors.array to react to render
     }
     try {
@@ -42,10 +42,11 @@ export const createUser = [
           password: hashedPassword
         }
       })
-      //return home
+      return res.status(201).json({message: 'user created succesfully'})
 
     } catch (err) {
       console.error('Error creating user ', err)
+      return res.status(500).json({error: 'internal server error'})
     }
   }
 ]
