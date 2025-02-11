@@ -1,19 +1,39 @@
 import App from "./App";
 // import { ErrorPage } from "./pages/ErrorPage";
 import { Navbar } from "./components/Navbar";
+import MainLayout from "./layouts/MainLayout";
 import { ErrorPage } from "./pages/ErrorPage";
+import HomePage from "./pages/HomePage";
+import Login from "./pages/Login";
+import Register from "./pages/Register";
+import SinglePost from "./pages/SinglePost";
 
-const routes = [{
-  path: "/",
-  element: (
-    <>
-      <Navbar />
-      <App />
-    </>
-  ),
-  errorElement: <ErrorPage />
-}
-  
+const routes = [
+  {
+    element: <MainLayout />,
+    children: [
+      {
+        path: '/',
+        element: <HomePage/>
+      },
+      {
+        path: '/login',
+        element: <Login/>
+      },
+      {
+        path: '/register',
+        element: <Register/>
+      },
+      {
+        path: '/:single_page',
+        element: <SinglePost/>
+      }
+      
+
+    ]
+  },
+
+  {errorElement: <ErrorPage />}
 
 ]
 
