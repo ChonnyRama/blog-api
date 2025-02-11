@@ -5,7 +5,10 @@ import routes from './routes'
 import { PrismaClient } from '@prisma/client'
 const prisma = new PrismaClient()
 const corsOptions = {
-  origin: ["http://localhost:5173"]
+  origin: [
+    "http://localhost:5173",
+    "http://localhost:5174"
+  ]
 }
 
 const app = express()

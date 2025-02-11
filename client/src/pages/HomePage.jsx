@@ -1,11 +1,14 @@
 import React from 'react'
 import styled from 'styled-components'
-import { Link} from 'react-router-dom'
+import { Link } from 'react-router-dom'
+import useFetchData from '../hooks/use-fetch-data'
+import PostPreview from '../components/PostPreview'
 
 const IntroDiv = styled.div`
-  margin-top: 70px;
+  margin: 70px 0;
   display: flex;
   gap: 10px;
+  width:100%;
 `
 
 const IntroFirst = styled.div`
@@ -14,7 +17,7 @@ const IntroFirst = styled.div`
   display: flex;
   flex-direction: column;
   justify-content: space-between;
-  background-color: #D3D3D3;
+  background-color: #e1ddff;
   padding: 20px;
   border-radius: 10px;
 `
@@ -51,10 +54,16 @@ const StyledImage = styled.img`
 `
 
 const ContentContainer = styled.div`
-
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr))
+  grid-gap:10px;
+  padding:10px;
 `
 
+
 export default function HomePage() {
+  const {data, loading} = useFetchData('http://localhost:3000/api/posts/all')
+
   return (
     <div>
       <IntroDiv>
@@ -71,7 +80,12 @@ export default function HomePage() {
 
       </IntroDiv>
       <ContentContainer>
-        
+        {loading && <div>Loading</div>}
+        {!loading && (
+          data.map(post => (
+            <PostPreview key={post.id}  post={post}/>
+          ))
+        )}
       </ContentContainer>
     </div>
   )

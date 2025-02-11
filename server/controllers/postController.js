@@ -21,3 +21,18 @@ export const createPost = async (req, res) => {
   }
   
 }
+
+export const getAllPosts = async (req, res) => {
+  try {
+    const allPosts = await prisma.post.findMany({
+      orderBy: {
+        createdAt: 'desc',
+      }
+    })
+
+    res.status(200).json(allPosts)
+
+  } catch (err) {
+    req.status(500).json({message: 'internal server error'})
+  }
+}

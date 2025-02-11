@@ -4,7 +4,7 @@ import { Link } from 'react-router-dom'
 import { FontAwesomeIcon } from '@fortawesome/react-fontawesome';
 import {faHouse, faUser} from '@fortawesome/free-solid-svg-icons'
 
-
+//https://www.color-hex.com/color-palette/1055574
 const StyledNavbar = styled.div`
   display: flex;
   width: 95vw;
@@ -14,7 +14,8 @@ const StyledNavbar = styled.div`
   left:0;
   z-index:100;
   padding: 2rem;
-  background-color: #43dfdb;
+  background-color: #d0c9ff;
+  max-height: 30px;
 `;
 
 const StyledLink = styled(Link)`
