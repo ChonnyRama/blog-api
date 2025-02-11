@@ -50,6 +50,10 @@ const StyledImage = styled.img`
 
 `
 
+const ContentContainer = styled.div`
+
+`
+
 export default function HomePage() {
   return (
     <div>
@@ -66,6 +70,9 @@ export default function HomePage() {
         </IntroSecond>
 
       </IntroDiv>
+      <ContentContainer>
+        
+      </ContentContainer>
     </div>
   )
 }
