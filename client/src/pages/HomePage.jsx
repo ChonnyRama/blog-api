@@ -69,7 +69,7 @@ export default function HomePage() {
       <IntroDiv>
         <IntroFirst>
           <h2>Welcome to Chonmagora</h2>
-          <p>Hello and welcome! My name is Chonny and this is my blog written by an aspiring developer. Feel free to look through my posts and enjoy your time here. </p>
+          <p>Hello and welcome! My name is Chonny and this is my blog written by an aspiring full-stack developer. Feel free to look through my posts and enjoy your time here. </p>
           <IntroButtons>
             <ButtonLink to='/register'>Sign up</ButtonLink> 
           </IntroButtons>
