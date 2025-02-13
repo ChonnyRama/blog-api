@@ -1,7 +1,7 @@
 import App from "./App";
 // import { ErrorPage } from "./pages/ErrorPage";
 import { Navbar } from "./components/Navbar";
-import MainLayout from "./layouts/MainLayout";
+import Main from "./main";
 import { ErrorPage } from "./pages/ErrorPage";
 import HomePage from "./pages/HomePage";
 import Login from "./pages/Login";
@@ -10,7 +10,7 @@ import SinglePost from "./pages/SinglePost";
 
 const routes = [
   {
-    element: <MainLayout />,
+    element: <Main />,
     children: [
       {
         path: '/',
