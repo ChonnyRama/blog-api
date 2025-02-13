@@ -15,7 +15,7 @@ export const login = async (req, res) => {
       return res.status(401).json({message: 'Invalid Credentials: incorrect password '})
     }
 
-    const token = jwt.sign({ userId: user.id, role: user.role }, process.env.JWT_SECRET, { expiresIn: '1h' })
+    const token = jwt.sign({ userId: user.id,username: user.username, role: user.role }, process.env.JWT_SECRET, { expiresIn: '1h' })
     
     res.cookie('token', token, {
       httpOnly: true,
@@ -23,7 +23,10 @@ export const login = async (req, res) => {
       sameSite: 'Strict',
       maxAge: 3600000,
     })
-    res.json({message: 'Login succesful'})
+    res.json({
+      message: 'Login succesful',
+      user: { id: user.id, username: user.username, role: user.role}
+    })
 
   } catch (error) {
     return res.status(500).json({message: 'internal server error'})
@@ -31,12 +34,11 @@ export const login = async (req, res) => {
 }
 
 export const verifyToken = async (req, res, next) => {
-  const bearerHeader = req.headers['authorization']
+  const token = req.cookies.token
 
-  if (typeof bearerHeader !== 'undefined') {
-    // Split at the space of Authorization: Bearer <access_token>
-    const bearer = bearerHeader.split(' ')
-    const token = bearer[1]
+  if (!token) {
+    return res.status(403).json({message: 'Forbidden: no token provided'})
+  }
 
     try {
       const decoded = jwt.verify(token, process.env.JWT_SECRET)
@@ -45,7 +47,14 @@ export const verifyToken = async (req, res, next) => {
     } catch (err) {
       return res.status(401).json({message: 'Invalid or expired token'})
     }
-  } else {
-    res.status(403).json({message: 'forbidden'})
-  }
+}
+
+export const logout = async (req, res) => {
+  res.clearCookie('token', {
+    httpOnly: true,
+    secure: process.env.NODE_ENV === 'production',
+    sameSite: 'Strict',
+  })
+
+  return res.status(200).json({message: 'logged out succesfully'})
 }
