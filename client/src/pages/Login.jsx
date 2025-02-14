@@ -1,6 +1,8 @@
 import React, { useState } from 'react'
 import styled from 'styled-components'
 import useFetchData from '../hooks/use-fetch-data'
+import { useAuth } from '../context/AuthContext'
+import { useNavigate } from 'react-router-dom'
 
 const LoginContainer = styled.div`
   display: flex;
@@ -20,7 +22,7 @@ const LoginForm = styled.form`
   border-radius: 10px;
   display: flex;
   flex-direction: column;
-  align-items: start;
+  align-items: center;
   gap: 15px;
 
   h2 {
@@ -40,8 +42,15 @@ const StyledLabel = styled.label`
 
 const LoginButton = styled.button`
   margin: 10px 0;
-  align-self: center;
 
+`
+
+const RegisterContainer = styled.div`
+
+
+  span {
+    font-size: .9rem;
+  }
 `
 
 export default function Login() {
@@ -49,6 +58,9 @@ export default function Login() {
     username: '',
     password: ''
   })
+  const {login} = useAuth()
+
+  const navigate = useNavigate();
 
   const handleChange = (e) => {
     const { name, value } = e.target
@@ -63,12 +75,16 @@ export default function Login() {
         headers: {
           'Content-Type': 'application/json',
         },
-        body: JSON.stringify(formData)
+        body: JSON.stringify(formData),
       })
 
-      const result = await response.json()
-      if (response.ok) { 
+      if (response.ok) {
+        const {token} = await response.json()
+        login(token)
         console.log("Login succesful")
+        navigate('/')
+      } else {
+        console.log("login failed")
       }
     } catch (err) {
       console.error('Error:', err)
@@ -94,6 +110,9 @@ export default function Login() {
           required
         />
         <LoginButton type="submit">Login</LoginButton>
+        <RegisterContainer>
+          <span>Or sign up now</span>
+        </RegisterContainer>
       </LoginForm>
     </LoginContainer>
   )

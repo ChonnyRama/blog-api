@@ -1,4 +1,4 @@
-import React, { createContext, useContext, useState } from 'react'
+import React, { createContext, useContext, useEffect, useState } from 'react'
 
 const AuthContext = createContext();
 
@@ -6,20 +6,57 @@ const AuthContext = createContext();
 export const useAuth = () => useContext(AuthContext)
 
 export const AuthProvider = ({ children }) => {
-  const [token, setToken] = useState(localStorage.getItem('token') || null)
+  const [user, setUser] = useState(null)
+  const [isAuthenticated, setIsAuthenticated] = useState(false)
 
-  const login = (newToken) => {
-    setToken(newToken)
-    localStorage.setItem('token', newToken)
+  const fetchUser = async () => {
+    try {
+      const token = localStorage.getItem('token')
+      if (!token) return
+
+      const response = await fetch('http://localhost:3000/api/sessions/verify', {
+        method: 'GET',
+        headers: {
+          'Authorization' : `Bearer ${token}`
+        },
+      })
+      
+      if (response.ok) {
+        const data = await response.json()
+        setUser(data.user)
+        setIsAuthenticated(true)
+        console.log(data.user)
+      } else {
+        setUser(null)
+        setIsAuthenticated(false)
+        localStorage.removeItem('token')
+      }
+
+    } catch (error) {
+      console.error('Error verifying token', error)
+      setUser(null)
+      setIsAuthenticated(false)
+      localStorage.removeItem('token')
+    }
   }
 
-  const logout = () => {
-    setToken(null)
+  const login = (token) => {
+    localStorage.setItem('token', token)
+    fetchUser()
+  }
+
+  const logout = async () => {
     localStorage.removeItem('token')
+    setUser(null)
+    setIsAuthenticated(false)
   }
+
+  useEffect(() => {
+    fetchUser()
+  },[])
 
   return (
-    <AuthContext.Provider value={{ token, login, logout }}>
+    <AuthContext.Provider value={{ user,isAuthenticated, login, logout }}>
       {children}
     </AuthContext.Provider>
   )

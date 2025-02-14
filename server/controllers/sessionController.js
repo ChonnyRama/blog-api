@@ -15,17 +15,15 @@ export const login = async (req, res) => {
       return res.status(401).json({message: 'Invalid Credentials: incorrect password '})
     }
 
-    const token = jwt.sign({ userId: user.id,username: user.username, role: user.role }, process.env.JWT_SECRET, { expiresIn: '1h' })
+    const token = jwt.sign(
+      { userId: user.id, username: user.username, role: user.role },
+      process.env.JWT_SECRET,
+      { expiresIn: '1h' },
+    )
     
-    res.cookie('token', token, {
-      httpOnly: true,
-      secure: process.env.NODE_ENV === 'production',
-      sameSite: 'Strict',
-      maxAge: 3600000,
-    })
     res.json({
       message: 'Login succesful',
-      user: { id: user.id, username: user.username, role: user.role}
+      token,
     })
 
   } catch (error) {
@@ -34,7 +32,8 @@ export const login = async (req, res) => {
 }
 
 export const verifyToken = async (req, res, next) => {
-  const token = req.cookies.token
+  const authHeader = req.headers['authorization']
+  const token = authHeader && authHeader.split(' ')[1]
 
   if (!token) {
     return res.status(403).json({message: 'Forbidden: no token provided'})

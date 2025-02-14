@@ -1,8 +1,9 @@
-import React from 'react'
+import React, { useContext } from 'react'
 import styled from 'styled-components'
 import { Link } from 'react-router-dom'
 import useFetchData from '../hooks/use-fetch-data'
 import PostPreview from '../components/PostPreview'
+import { useAuth } from '../context/AuthContext'
 
 const IntroDiv = styled.div`
   margin: 70px 0;
@@ -62,13 +63,13 @@ const ContentContainer = styled.div`
 
 
 export default function HomePage() {
-  const {data, loading} = useFetchData('http://localhost:3000/api/posts/all')
-
+  const { data, loading } = useFetchData('http://localhost:3000/api/posts/all')
+  const { user } = useAuth()
   return (
     <div>
       <IntroDiv>
         <IntroFirst>
-          <h2>Welcome to Chonmagora</h2>
+          <h2>Welcome { user ? user.username : 'to my blog' }</h2>
           <p>Hello and welcome! My name is Chonny and this is my blog written by an aspiring full-stack developer. Feel free to look through my posts and enjoy your time here. </p>
           <IntroButtons>
             <ButtonLink to='/register'>Sign up</ButtonLink> 
