@@ -7,9 +7,31 @@ const prisma = new PrismaClient()
 const validateUser = [
   body("username").trim()
     .isAlphanumeric().withMessage('Must be alphanumeric')
-    .isLength({ min: 1, max: 14 }).withMessage('Has to be between 1-14 characters'),
+    .isLength({ min: 1, max: 14 }).withMessage('Has to be between 1-14 characters')
+    .custom(async (value) => {
+      const user = await prisma.user.findUnique({
+        where: {
+          username: value
+        }
+      })
+      if (user) {
+        throw new Error('Username is already in use')
+      }
+      return true
+  }).withMessage('Username is already in use'),
   body('email')
-    .isEmail().withMessage('Not a valid email'),
+    .isEmail().withMessage('Not a valid email')
+    .custom(async (value) => {
+      const user = await prisma.user.findUnique({
+        where: {
+          email: value
+        }
+      })
+      if (user) {
+        throw new Error('Email is already in use')
+      }
+      return true
+  }).withMessage('Email is already in use'),
   body('password')
     .isLength({ min: 5 }).withMessage('Password must be at least 5 chars long'),
   body('confirmPassword').custom((value, { req }) => {

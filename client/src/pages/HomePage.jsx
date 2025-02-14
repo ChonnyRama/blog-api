@@ -10,6 +10,7 @@ const IntroDiv = styled.div`
   display: flex;
   gap: 10px;
   width:100%;
+  height: 400px;
 `
 
 const IntroFirst = styled.div`
@@ -17,14 +18,18 @@ const IntroFirst = styled.div`
   text-align: left;
   display: flex;
   flex-direction: column;
-  justify-content: space-between;
+  justify-content: start;
   background-color: #e1ddff;
-  padding: 20px;
+  padding: 10px;
   border-radius: 10px;
 `
 
 const IntroSecond = styled.div`
-  flex:1
+  flex: 1;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  overflow: hidden;
 `
 const IntroButtons = styled.div`
   text-align: center;
@@ -48,9 +53,15 @@ const ButtonLink = styled(Link)`
 
 const StyledImage = styled.img`
   width: 100%;
-  height: auto;
+  height: 100%;
   object-fit: cover;
   border-radius: 10px;
+
+`
+
+const StyledThumb = styled.img`
+  max-width: 200px;
+  align-self: center;
 
 `
 
@@ -64,16 +75,20 @@ const ContentContainer = styled.div`
 
 export default function HomePage() {
   const { data, loading } = useFetchData('http://localhost:3000/api/posts/all')
-  const { user } = useAuth()
+  const { user, isAuthenticated } = useAuth()
   return (
     <div>
       <IntroDiv>
         <IntroFirst>
           <h2>Welcome { user ? user.username : 'to my blog' }</h2>
           <p>Hello and welcome! My name is Chonny and this is my blog written by an aspiring full-stack developer. Feel free to look through my posts and enjoy your time here. </p>
-          <IntroButtons>
-            <ButtonLink to='/register'>Sign up</ButtonLink> 
-          </IntroButtons>
+          {!isAuthenticated ? (
+            <IntroButtons>
+              <ButtonLink to='/register'>Sign up</ButtonLink> 
+            </IntroButtons>
+          ) : (
+              <StyledThumb src='/094.png'></StyledThumb>
+          )}
         </IntroFirst>
         <IntroSecond>
           <StyledImage src="/keyboard.jpg" alt="desk"></StyledImage>

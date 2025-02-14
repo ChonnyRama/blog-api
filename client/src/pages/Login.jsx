@@ -2,21 +2,21 @@ import React, { useState } from 'react'
 import styled from 'styled-components'
 import useFetchData from '../hooks/use-fetch-data'
 import { useAuth } from '../context/AuthContext'
-import { useNavigate } from 'react-router-dom'
+import { Link, useLocation, useNavigate } from 'react-router-dom'
 
 const LoginContainer = styled.div`
   display: flex;
   flex-direction: column;
-  justify-content: center;
+  justify-content: start;
   align-items: center;
-  width: 100vw;
-  height: 100vh;
+  width: 99vw;
+  height: 99vh;
   overflow: hidden;
+  margin-top: 100px;
 `
 
 const LoginForm = styled.form`
-  position: relative;
-  top: -20vh;
+
   background-color: #d0c9ff;
   padding: 20px 20px;
   border-radius: 10px;
@@ -46,11 +46,19 @@ const LoginButton = styled.button`
 `
 
 const RegisterContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 5px;
+  font-size: .9rem;
+`
 
-
-  span {
-    font-size: .9rem;
-  }
+const RegistrationMessage = styled.div`
+  padding: 10px;
+  background-color: #d4edda;
+  color: #155724;
+  border-radius: 5px;
+  margin-bottom: 15px;
 `
 
 export default function Login() {
@@ -58,9 +66,11 @@ export default function Login() {
     username: '',
     password: ''
   })
-  const {login} = useAuth()
+  const { login } = useAuth()
 
   const navigate = useNavigate();
+  const location = useLocation()
+  const message = location.state?.message
 
   const handleChange = (e) => {
     const { name, value } = e.target
@@ -95,6 +105,11 @@ export default function Login() {
 
   return (
     <LoginContainer>
+      {message && (
+        <RegistrationMessage>
+          {message}
+        </RegistrationMessage>
+      )}
       <LoginForm className='login-form' onSubmit={handleSubmit}>
         <h2>Sign in</h2>
         <StyledLabel htmlFor="username"></StyledLabel>
@@ -112,6 +127,7 @@ export default function Login() {
         <LoginButton type="submit">Login</LoginButton>
         <RegisterContainer>
           <span>Or sign up now</span>
+          <Link to='/register'>Sign Up</Link>
         </RegisterContainer>
       </LoginForm>
     </LoginContainer>
