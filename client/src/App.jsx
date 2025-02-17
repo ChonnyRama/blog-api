@@ -3,7 +3,7 @@ import reactLogo from './assets/react.svg'
 import viteLogo from '/vite.svg'
 import './App.css'
 import { createBrowserRouter, RouterProvider } from 'react-router-dom'
-import { AuthProvider } from './context/AuthContext'
+import { AuthProvider } from 'shared/context/AuthContext'
 import { createRoot } from 'react-dom/client'
 import routes from './routes'
 

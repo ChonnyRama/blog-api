@@ -1,7 +1,7 @@
 import React, { useState } from 'react'
 import styled from 'styled-components'
-import useFetchData from '../hooks/use-fetch-data'
-import { useAuth } from '../context/AuthContext'
+import useFetchData from 'shared/hooks/use-fetch-data'
+import { useAuth } from 'shared/context/AuthContext'
 import { Link, useLocation, useNavigate } from 'react-router-dom'
 
 const LoginContainer = styled.div`

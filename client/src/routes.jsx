@@ -1,12 +1,10 @@
-import App from "./App";
 // import { ErrorPage } from "./pages/ErrorPage";
-import { Navbar } from "./components/Navbar";
 import Main from "./main";
 import { ErrorPage } from "./pages/ErrorPage";
-import HomePage from "./pages/HomePage";
-import Login from "./pages/Login";
-import Register from "./pages/Register";
-import SinglePost from "./pages/SinglePost";
+import HomePage from "shared/pages/HomePage";
+import Login from "shared/pages/Login";
+import Register from "shared/pages/Register";
+import SinglePost from "shared/pages/SinglePost";
 
 const routes = [
   {

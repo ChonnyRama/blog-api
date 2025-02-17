@@ -3,7 +3,7 @@ import styled from 'styled-components'
 import { Link } from 'react-router-dom'
 import useFetchData from '../hooks/use-fetch-data'
 import PostPreview from '../components/PostPreview'
-import { useAuth } from '../context/AuthContext'
+import { useAuth } from 'shared/context/AuthContext'
 
 const IntroDiv = styled.div`
   margin: 70px 0;
