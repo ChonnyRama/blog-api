@@ -5,6 +5,7 @@ import HomePage from "shared/pages/HomePage";
 import Login from "shared/pages/Login";
 import Register from "shared/pages/Register";
 import SinglePost from "shared/pages/SinglePost";
+import AuthorDashboard from "./pages/AuthorDashboard";
 
 const routes = [
   {
@@ -12,7 +13,7 @@ const routes = [
     children: [
       {
         path: '/',
-        element: <HomePage/>
+        element: <AuthorDashboard/>
       },
       {
         path: '/login',

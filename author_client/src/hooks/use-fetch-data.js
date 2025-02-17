@@ -9,8 +9,15 @@ const useFetchData = (endpoint) => {
   useEffect(() => {
     const fetchData = async () => {
       try {
+        const token = localStorage.getItem('token')
+        if (!token) {
+          setError('No token found. Please log in')
+          setLoading(false)
+          return
+        }
 
-        const { data: response } = await axios.get(endpoint)
+        const headers = token ? { Authorization: `Bearer ${token}` } : {}
+        const { data: response } = await axios.get(endpoint, {headers})
         setData(response)
         console.log(data)
       } catch (error) {

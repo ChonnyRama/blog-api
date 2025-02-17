@@ -22,9 +22,12 @@ export const createPost = async (req, res) => {
   
 }
 
-export const getAllPosts = async (req, res) => {
+export const getAllPublished = async (req, res) => {
   try {
     const allPosts = await prisma.post.findMany({
+      where: {
+        published: true
+      },
       orderBy: {
         createdAt: 'desc',
       }
@@ -34,5 +37,42 @@ export const getAllPosts = async (req, res) => {
 
   } catch (err) {
     req.status(500).json({message: 'internal server error'})
+  }
+}
+
+export const getAllPosts = async (req, res) => {
+  try {
+    const allPosts = await prisma.post.findMany({
+      where: {
+        published: undefined
+      },
+      orderBy: {
+        createdAt: 'desc',
+      }
+    })
+
+    res.status(200).json(allPosts)
+
+  } catch (err) {
+    req.status(500).json({message: 'internal server error'})
+  }
+}
+
+export const updatePublished = async (req, res) => {
+  try {
+
+    await prisma.post.update({
+      where: {
+        id: req.body.id
+      },
+      data: {
+        published: req.body.published
+      }
+    })
+
+    res.status(200).json({ message: 'Changed published status' })
+    
+  } catch (error) {
+    req.status(500).json({message:'internal server error'})
   }
 }

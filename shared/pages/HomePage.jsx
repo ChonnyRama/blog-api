@@ -78,7 +78,7 @@ const ContentContainer = styled.div`
 
 
 export default function HomePage() {
-  const { data, loading } = useFetchData('http://localhost:3000/api/posts/all')
+  const { data, loading } = useFetchData('http://localhost:3000/api/posts/published')
   const { user, isAuthenticated } = useAuth()
   return (
     <div>

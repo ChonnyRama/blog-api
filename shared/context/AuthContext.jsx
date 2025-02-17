@@ -8,7 +8,8 @@ export const useAuth = () => useContext(AuthContext)
 export const AuthProvider = ({ children }) => {
   const [user, setUser] = useState(null)
   const [isAuthenticated, setIsAuthenticated] = useState(false)
-
+  const [isAuthor, setIsAuthor] = useState(false)
+  
   const fetchUser = async () => {
     try {
       const token = localStorage.getItem('token')
@@ -26,6 +27,12 @@ export const AuthProvider = ({ children }) => {
         setUser(data.user)
         setIsAuthenticated(true)
         console.log(data.user)
+
+        if (data.user.role === 'AUTHOR') {
+          setIsAuthor(true)
+        } else {
+          setIsAuthor(false)
+        }
       } else {
         setUser(null)
         setIsAuthenticated(false)
@@ -56,7 +63,7 @@ export const AuthProvider = ({ children }) => {
   },[])
 
   return (
-    <AuthContext.Provider value={{ user,isAuthenticated, login, logout }}>
+    <AuthContext.Provider value={{ user,isAuthenticated, isAuthor, login, logout }}>
       {children}
     </AuthContext.Provider>
   )
