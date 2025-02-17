@@ -1,6 +1,6 @@
 // import { ErrorPage } from "./pages/ErrorPage";
 import Main from "./main";
-import { ErrorPage } from "./pages/ErrorPage";
+import { ErrorPage } from "shared/pages/ErrorPage";
 import HomePage from "shared/pages/HomePage";
 import Login from "shared/pages/Login";
 import Register from "shared/pages/Register";

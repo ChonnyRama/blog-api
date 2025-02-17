@@ -4,6 +4,8 @@ import { Link } from 'react-router-dom'
 import useFetchData from '../hooks/use-fetch-data'
 import PostPreview from '../components/PostPreview'
 import { useAuth } from 'shared/context/AuthContext'
+import keyboardImage from 'shared/assets/keyboard.jpg';
+import thumbImage from 'shared/assets/094.png';
 
 const IntroDiv = styled.div`
   margin: 70px 0;
@@ -20,7 +22,7 @@ const IntroFirst = styled.div`
   flex-direction: column;
   justify-content: start;
   background-color: #e1ddff;
-  padding: 10px;
+  padding: 20px;
   border-radius: 10px;
 `
 
@@ -48,6 +50,8 @@ const ButtonLink = styled(Link)`
   &:hover {
   background-color: #3730a3
   }
+
+  margin-top: 60px;
 
 `
 
@@ -87,11 +91,11 @@ export default function HomePage() {
               <ButtonLink to='/register'>Sign up</ButtonLink> 
             </IntroButtons>
           ) : (
-              <StyledThumb src='/094.png'></StyledThumb>
+              <StyledThumb src={thumbImage}></StyledThumb>
           )}
         </IntroFirst>
         <IntroSecond>
-          <StyledImage src="/keyboard.jpg" alt="desk"></StyledImage>
+          <StyledImage src={keyboardImage} alt="desk"></StyledImage>
         </IntroSecond>
 
       </IntroDiv>
