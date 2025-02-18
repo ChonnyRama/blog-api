@@ -12,6 +12,7 @@
   -webkit-font-smoothing: antialiased;
   -moz-osx-font-smoothing: grayscale;
   overflow: hidden;
+  box-sizing:border-box;
 }
 
 a {
@@ -25,7 +26,6 @@ a:hover {
 
 body {
   margin: 0;
-  display: flex;
   min-width: 320px;
   min-height: 100vh;
 }
@@ -65,4 +65,12 @@ button:focus-visible {
   button {
     background-color: #f9f9f9;
   }
+}
+
+main {
+  margin-top: 100px;
+  width: 90vw;
+  max-width: 1200px; /* Optional: Limit maximum growth */
+  margin-left: auto;
+  margin-right: auto;
 }
