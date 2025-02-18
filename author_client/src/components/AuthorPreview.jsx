@@ -5,7 +5,7 @@ import Toggle from 'react-toggle'
 import { useState } from 'react'
 import { useAuth } from 'shared/context/AuthContext'
 import axios from 'axios'
-import {Link} from 'react-router-dom'
+import {Link, useNavigate} from 'react-router-dom'
 
 const AuthorPostWrapper = styled.div`
   display: flex;
@@ -55,17 +55,20 @@ const TogglePublished = styled.div`
 
 `
 
-const EditButton = styled(Link)`
-  padding: 20px 40px;
+const StyledButton = styled(Link)`
+  width: 100px;
+  height: 50px;
   text-decoration: none;
   color: black;  /* Set text color to white for visibility */
-  border-radius: 5px;  /* Optional: adds rounded corners */
+  border-radius: 20px;  /* Optional: adds rounded corners */
   display: flex;
   align-items: center;
+  justify-content: center;
   gap: 10px;
+  background-color: 	#e1ddff;
   
   &:hover {
-    background-color: 	#e1ddff;  /* Darken background on hover */
+    background-color: 	#f4b5eb;  /* Darken background on hover */
   }
 `
 
@@ -78,7 +81,7 @@ const PostOptionsContainer = styled.div`
 
 export default function AuthorPreview({ post }) {
   const [isPublished, setIsPublished] = useState(post.published || false)
-  const { user} = useAuth()
+  const { user } = useAuth()
 
   const handleToggle = async (e) => {
     const newStatus = !isPublished
@@ -101,6 +104,21 @@ export default function AuthorPreview({ post }) {
     }
   }
 
+  const handleDelete = async (e) => {
+    try {
+      const token = localStorage.getItem('token')
+      const headers = token ? { Authorization: `Bearer ${token}` } : {}
+      await axios.delete(`http://localhost:3000/api/posts/delete/${post.id}`,
+        {headers}
+      )
+      window.location.reload()
+    } catch (error) {
+      console.log('error deleting', error)
+    }
+    
+    
+  }
+
   return (
     <AuthorPostWrapper>
       <StyledPostPreview href={`/posts/${post.id}`}>
@@ -116,7 +134,8 @@ export default function AuthorPreview({ post }) {
           />
           <label htmlFor='published'>Published</label>
         </TogglePublished>
-        <EditButton to={`/edit/${post.id}`} state={{post}}>Edit</EditButton>
+        <StyledButton to={`/edit/${post.id}`} state={{ post }}>Edit</StyledButton>
+        <StyledButton onClick={handleDelete}>Delete</StyledButton>
       </PostOptionsContainer>
     </AuthorPostWrapper>
   )

@@ -7,6 +7,7 @@ import Register from "shared/pages/Register";
 import SinglePost from "shared/pages/SinglePost";
 import AuthorDashboard from "./pages/AuthorDashboard";
 import EditPost from "./pages/EditPost";
+import CreatePost from "./pages/CreatePost";
 
 const routes = [
   {
@@ -31,6 +32,10 @@ const routes = [
       {
         path: '/edit/:single_page',
         element: <EditPost/>
+      },
+      {
+        path: '/create',
+        element: <CreatePost/>
       }
       
 

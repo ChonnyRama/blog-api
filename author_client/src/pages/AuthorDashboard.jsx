@@ -1,4 +1,4 @@
-import React from 'react'
+import React, { useEffect, useState } from 'react'
 import useFetchData from '../hooks/use-fetch-data'
 import styled from 'styled-components'
 import AuthorPreview from '../components/AuthorPreview'
@@ -36,15 +36,16 @@ const CreateButton = styled(Link)`
   display: flex;
   align-items: center;
   gap: 10px;
+  background-color: 	#e1ddff;
   
   &:hover {
-    background-color: 	#e1ddff;  /* Darken background on hover */
+    background-color: 	#f4b5eb;  /* Darken background on hover */
   }
 `
 
 export default function AuthorDashboard() {
   const {data, loading, error} = useFetchData('http://localhost:3000/api/posts/all')
-  
+
   if (error) {
     return <ErrorMessage>{error}</ErrorMessage>
   }
