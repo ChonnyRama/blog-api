@@ -5,6 +5,7 @@ import Toggle from 'react-toggle'
 import { useState } from 'react'
 import { useAuth } from 'shared/context/AuthContext'
 import axios from 'axios'
+import {Link} from 'react-router-dom'
 
 const AuthorPostWrapper = styled.div`
   display: flex;
@@ -54,6 +55,27 @@ const TogglePublished = styled.div`
 
 `
 
+const EditButton = styled(Link)`
+  padding: 20px 40px;
+  text-decoration: none;
+  color: black;  /* Set text color to white for visibility */
+  border-radius: 5px;  /* Optional: adds rounded corners */
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  
+  &:hover {
+    background-color: 	#e1ddff;  /* Darken background on hover */
+  }
+`
+
+const PostOptionsContainer = styled.div`
+  display: flex;
+  flex-direction: column;
+  gap: 20px;
+  align-items: center;
+`
+
 export default function AuthorPreview({ post }) {
   const [isPublished, setIsPublished] = useState(post.published || false)
   const { user} = useAuth()
@@ -85,14 +107,17 @@ export default function AuthorPreview({ post }) {
         <h3>{post.title}</h3>
         <p>{post.content}</p>
       </StyledPostPreview>
-      <TogglePublished>
-        <Toggle
-          id='published'
-          checked={isPublished}
-          onChange={handleToggle}
-        />
-        <label htmlFor='published'>Published</label>
-      </TogglePublished>
+      <PostOptionsContainer>
+        <TogglePublished>
+          <Toggle
+            id='published'
+            checked={isPublished}
+            onChange={handleToggle}
+          />
+          <label htmlFor='published'>Published</label>
+        </TogglePublished>
+        <EditButton to={`/edit/${post.id}`} state={{post}}>Edit</EditButton>
+      </PostOptionsContainer>
     </AuthorPostWrapper>
   )
 }

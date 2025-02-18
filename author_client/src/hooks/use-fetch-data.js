@@ -22,8 +22,11 @@ const useFetchData = (endpoint) => {
         console.log(data)
       } catch (error) {
         console.error(error)
+        setError(error.response?.data?.message || 'Failed to fetch data.')
+      } finally {
+        setLoading(false)
       }
-      setLoading(false)
+      
     }
     fetchData()
   }, [endpoint])

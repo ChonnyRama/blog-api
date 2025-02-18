@@ -6,6 +6,7 @@ import Login from "shared/pages/Login";
 import Register from "shared/pages/Register";
 import SinglePost from "shared/pages/SinglePost";
 import AuthorDashboard from "./pages/AuthorDashboard";
+import EditPost from "./pages/EditPost";
 
 const routes = [
   {
@@ -26,6 +27,10 @@ const routes = [
       {
         path: '/:single_page',
         element: <SinglePost/>
+      },
+      {
+        path: '/edit/:single_page',
+        element: <EditPost/>
       }
       
 

@@ -8,7 +8,7 @@ import { useAuth } from 'shared/context/AuthContext';
 //https://www.color-hex.com/color-palette/1055574
 const StyledNavbar = styled.div`
   display: flex;
-  width: 95vw;
+  width: 99vw;
   justify-content: space-between;  
   position: fixed;
   top: 0;
